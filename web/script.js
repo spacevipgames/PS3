@@ -47,11 +47,22 @@ document.addEventListener("DOMContentLoaded", function () {
             
             link.addEventListener("click", function (event) {
                 event.preventDefault();
-                window.open(archiveFile, "_blank"); // Abre em nova aba para evitar restrições do navegador
+                const a = document.createElement("a");
+                a.href = archiveFile;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.download = "";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             });
         });
     }
 
-    // Definir o cookie de autenticação
-    document.cookie = "abtest-identifier=237063cb5b53d6175c282df626d055dd; path=/";
+    // Definir os cookies de autenticação
+    document.cookie = "abtest-identifier=4ddae50131c9f297496cba5d5dece3c3; path=/";
+    document.cookie = "donation-identifier=e850cec1813f327e4507d817ccaa5fa6; path=/";
+    document.cookie = "logged-in-sig=1774090604 1742554604 ezt7SDc1H6/28GqN9PvGitJJ45ibjK0cMrB+tO0fZvKnynYJg6K1rN3bIzB9v0DYNuJEupT+c6c82GG/dPce0rraZ38TlQ48tbtQ/Oi1Gg2oJF4s+QqhuyXGcIyGmQ4u90MgzbZJWF9dUpfPC4onMMfxYfTYdQgt/6GhWjQ3YlQ/UjVe9OmbDp3FaSKF3QHmqRZWySVW3RJ4GwUoF7pTU4qPrL7le49flKE0tEaoaIMrjzfVr5Pvy+sZX3QNmQZ6aQ6f4c39487xVzWTjDk7YM2ZwZtLdIKOo+bXA30CAMEPyhn9o5gvir11hj+Au9XeqSj8lneXhXPJCeZK6yrVJQ==; path=/";
+    document.cookie = "logged-in-user=estabiomarcos740@gmail.com; path=/";
+    document.cookie = "test-cookie=1; path=/";
 });
