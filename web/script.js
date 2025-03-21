@@ -1,12 +1,13 @@
 // Script para exibir listas de downloads e iniciar download automaticamente no PS3
 
 document.addEventListener("DOMContentLoaded", function () {
+    const listSelection = document.getElementById("listSelection");
     const listContainer = document.getElementById("listContainer");
 
     // Carregar a lista automaticamente ao iniciar a página
     loadList("a1.html");
 
-    // Carregar nova lista ao clicar em um link de seleção
+    // Carregar a lista quando um link for clicado
     document.querySelectorAll(".list-link").forEach(link => {
         link.addEventListener("click", function (event) {
             event.preventDefault();
@@ -35,22 +36,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function attachDownloadLinks() {
         document.querySelectorAll(".download-link").forEach(link => {
-            let archiveFile = link.getAttribute("data-file") ? link.getAttribute("data-file").trim() : "";
-
-            if (archiveFile) {
-                // Ajusta o link corretamente para Archive.org
+            let archiveFile = link.getAttribute("data-file").trim();
+            
+            if (!archiveFile.startsWith("http")) {
                 archiveFile = `https://archive.org/download/sony_playstation3_a_part1/${encodeURIComponent(archiveFile)}`;
-
-                link.setAttribute("href", archiveFile);
-                link.setAttribute("rel", "noopener noreferrer");
-                
-                link.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    
-                    // Redireciona diretamente para o arquivo fora do GitHub Pages
-                    window.location.replace(archiveFile);
-                });
             }
+            
+            link.setAttribute("href", archiveFile);
+            link.setAttribute("target", "_blank"); // Abre em uma nova aba para evitar bloqueio
+            link.setAttribute("rel", "noopener noreferrer");
+            link.setAttribute("download", ""); // Força o download automático
+            
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                setTimeout(() => {
+                    window.location.replace(archiveFile); // Redireciona diretamente para o arquivo fora do GitHub Pages
+                }, 500); // Pequeno atraso para compatibilidade com o PS3
+            });
         });
     }
 });
