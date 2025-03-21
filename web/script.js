@@ -1,70 +1,41 @@
-// Script para exibir listas de downloads e iniciar download automaticamente no PS3
-
 document.addEventListener("DOMContentLoaded", function () {
-    document.body.style.backgroundColor = "black";
-    document.body.style.color = "white";
-    
-    const container = document.getElementById("listContainer") || document.createElement("div");
-    container.id = "listContainer";
-    document.body.appendChild(container);
+    const listSelection = document.getElementById("listSelection");
+    const listContainer = document.getElementById("listContainer");
 
-    function loadList(fileName) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", fileName, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    container.innerHTML = xhr.responseText;
-                    setupDownloadLinks();
-                } else {
-                    container.innerHTML = `<p style="color: red;">Erro ao carregar a lista: ${xhr.statusText}</p>`;
+    // Carregar a lista quando um link for clicado
+    document.querySelectorAll(".list-link").forEach(link => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            const file = this.getAttribute("data-file");
+            loadList(file);
+        });
+    });
+
+    function loadList(file) {
+        fetch(file)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro ao carregar a lista.");
                 }
-            }
-        };
-        xhr.send();
+                return response.text();
+            })
+            .then(data => {
+                listContainer.innerHTML = data;
+                attachDownloadLinks();
+            })
+            .catch(error => {
+                listContainer.innerHTML = "<p>Erro ao carregar a lista.</p>";
+            });
     }
 
-    function setupDownloadLinks() {
-        document.querySelectorAll("#listContainer a").forEach(link => {
-            link.style.color = "white";
-            link.setAttribute("target", "_blank");
+    function attachDownloadLinks() {
+        document.querySelectorAll(".download-link").forEach(link => {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
-                
-                // URL original do link
-                let originalUrl = link.getAttribute("href");
-                
-                // Verifica se o link já contém um domínio completo, se não, adiciona o domínio correto
-                if (!originalUrl.startsWith("http")) {
-                    originalUrl = "https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/" + originalUrl;
-                }
-                
-                // Redireciona o usuário para o link formatado
-                window.location.href = originalUrl;
+                const archiveUrl = this.getAttribute("href");
+                const finalUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${archiveUrl}`;
+                window.location.href = finalUrl;
             });
         });
     }
-
-    // Criar a lista de opções antes de configurar os eventos
-    const listContainer = document.createElement("div");
-    listContainer.innerHTML = `
-        <h2 style="text-align: center;">Escolha uma Lista</h2>
-        <ul id="listSelection" style="text-align: center; list-style: none; padding: 0;">
-            <li><a href="#" class="list-link" data-file="a1.html">Lista A1</a></li>
-            <li><a href="#" class="list-link" data-file="b1.html">Lista B1</a></li>
-            <li><a href="#" class="list-link" data-file="b2.html">Lista B2</a></li>
-        </ul>
-    `;
-    document.body.prepend(listContainer);
-
-    // Event delegation para garantir que os links sempre respondam
-    document.getElementById("listSelection").addEventListener("click", function (event) {
-        if (event.target.classList.contains("list-link")) {
-            event.preventDefault();
-            loadList(event.target.dataset.file);
-        }
-    });
-    
-    // Carregar automaticamente a primeira lista para evitar tela vazia no PS3
-    loadList("a1.html");
 });
