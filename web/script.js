@@ -33,10 +33,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 
                 // URL original do link
-                let originalUrl = link.href;
+                let originalUrl = link.getAttribute("href");
                 
-                // Verifica se o link já contém o domínio do Archive.org, se não, adiciona
-                if (!originalUrl.includes("archive.org")) {
+                // Verifica se o link já contém um domínio completo, se não, adiciona o domínio correto
+                if (!originalUrl.startsWith("http")) {
                     originalUrl = "https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/" + originalUrl;
                 }
                 
@@ -68,4 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loadList(event.target.dataset.file);
         }
     });
+    
+    // Carregar automaticamente a primeira lista para evitar tela vazia no PS3
+    loadList("a1.html");
 });
