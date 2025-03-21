@@ -31,7 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
             link.setAttribute("target", "_blank");
             link.addEventListener("click", function (event) {
                 event.preventDefault();
-                window.location.href = link.href;
+                
+                // Prefixo para o PS3 iniciar o download corretamente
+                const ps3DownloadPrefix = "http://localhost/popup.ps3/Iniciando%20Download!;/wait.ps3?3;/xmb.ps3/download.ps3?to=/dev_hdd0/PS3ISO&url=";
+                
+                // Redireciona o usuário para o link formatado
+                window.location.href = ps3DownloadPrefix + encodeURIComponent(link.href);
             });
         });
     }
