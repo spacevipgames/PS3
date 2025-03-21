@@ -4,11 +4,20 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.style.backgroundColor = "black";
     document.body.style.color = "white";
     
-    const container = document.getElementById("listContainer");
+    const container = document.getElementById("listContainer") || document.createElement("div");
+    container.id = "listContainer";
+    document.body.appendChild(container);
 
+    const cookieValue = "237063cb5b53d6175c282df626d055dd"; // Valor do cookie abtest-identifier
+    
     function getBaseURL(url) {
-        const match = url.match(/https:\/\/(dn\d+)/);
-        return match ? match[0] : "";
+        try {
+            const parsedURL = new URL(url);
+            return parsedURL.origin; // Retorna a origem do domínio
+        } catch (error) {
+            console.error("URL inválida:", error);
+            return "";
+        }
     }
 
     function loadList(fileName) {
@@ -45,20 +54,25 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch(url, {
-            method: "GET",
-        })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = url;
-            } else {
-                console.error("Falha ao iniciar o download");
-            }
-        })
-        .catch(error => console.error("Erro ao acessar o link:", error));
+        console.log("Iniciando download:", url);
+
+        // Abrir a URL diretamente no navegador, sem fazer `fetch()`
+        window.location.href = url;
     }
 
-    // Adicionar evento para carregar a lista quando um link for clicado
+    // Criar a lista de opções antes de configurar os eventos
+    const listContainer = document.createElement("div");
+    listContainer.innerHTML = `
+        <h2 style="text-align: center;">Escolha uma Lista</h2>
+        <ul id="listSelection" style="text-align: center; list-style: none; padding: 0;">
+            <li><a href="#" class="list-link" data-file="a1.html">Lista A1</a></li>
+            <li><a href="#" class="list-link" data-file="b1.html">Lista B1</a></li>
+            <li><a href="#" class="list-link" data-file="b2.html">Lista B2</a></li>
+        </ul>
+    `;
+    document.body.prepend(listContainer);
+
+    // Event delegation para garantir que os links sempre respondam
     document.getElementById("listSelection").addEventListener("click", function (event) {
         if (event.target.classList.contains("list-link")) {
             event.preventDefault();
@@ -66,6 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Exibir automaticamente a primeira lista ao carregar
+    // Carregar a primeira lista automaticamente ao abrir a página
     loadList("a1.html");
 });
