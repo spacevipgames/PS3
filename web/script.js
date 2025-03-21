@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const listSelection = document.getElementById("listSelection");
     const listContainer = document.getElementById("listContainer");
 
-    // Carregar a lista quando um link for clicado
+    // Adiciona evento para troca de listas
     document.querySelectorAll(".list-link").forEach(link => {
         link.addEventListener("click", function (event) {
             event.preventDefault();
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 listContainer.innerHTML = xhr.responseText;
-                attachDownloadLinks(); // Garante que os links são ajustados após carregar a lista
+                fixDownloadLinks(); // Corrige os links após carregar a lista
             } else if (xhr.readyState == 4) {
                 listContainer.innerHTML = "<p>Erro ao carregar a lista.</p>";
             }
@@ -25,22 +25,15 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.send();
     }
 
-    function attachDownloadLinks() {
-        document.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
-                const archiveUrl = this.getAttribute("href");
-
-                if (archiveUrl.startsWith("http")) {
-                    // Se o link já contém um domínio, redireciona diretamente
-                    window.location.href = archiveUrl;
-                } else {
-                    // Caso contrário, adiciona o domínio do Archive.org
-                    const finalUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${archiveUrl}`;
-                    console.log("Redirecionando para:", finalUrl);
-                    window.location.href = finalUrl;
-                }
-            });
+    function fixDownloadLinks() {
+        document.querySelectorAll("#listContainer a").forEach(link => {
+            const originalHref = link.getAttribute("href");
+            if (originalHref && !originalHref.startsWith("http")) {
+                // Corrige o link para apontar para o Archive.org
+                const finalUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${originalHref}`;
+                link.setAttribute("href", finalUrl);
+                link.setAttribute("target", "_blank"); // Garante que abre corretamente
+            }
         });
     }
 });
