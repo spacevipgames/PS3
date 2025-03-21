@@ -33,17 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".download-link").forEach(link => {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
-                let archiveFile = this.getAttribute("href");
-
-                // Se o link já é absoluto, redireciona diretamente
-                if (archiveFile.startsWith("http") || archiveFile.startsWith("//")) {
-                    window.location.href = archiveFile;
-                } else {
-                    // Garantir que os links sejam sempre completos e apontem para o Archive.org
-                    const baseURL = "https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/";
-                    const archiveUrl = baseURL + encodeURIComponent(archiveFile);
-                    window.location.href = archiveUrl;
+                let archiveFile = this.getAttribute("href").trim();
+                
+                if (!archiveFile.startsWith("http")) {
+                    archiveFile = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${encodeURIComponent(archiveFile)}`;
                 }
+                
+                window.location.href = archiveFile;
             });
         });
     }
