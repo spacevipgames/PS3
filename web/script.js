@@ -1,4 +1,54 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const listContainer = document.getElementById("list-container");
+    const listButtons = document.querySelectorAll(".list-button");
+
+    listButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const listFile = button.getAttribute("data-list");
+            loadList(listFile);
+        });
+    });
+
+    function loadList(listFile) {
+        fetch(listFile)
+            .then(response => response.text())
+            .then(html => {
+                listContainer.innerHTML = html;
+                addDownloadListeners();
+            })
+            .catch(error => console.error("Erro ao carregar a lista:", error));
+    }
+
+    function addDownloadListeners() {
+        const downloadLinks = listContainer.querySelectorAll("a");
+        downloadLinks.forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                const url = link.href;
+                startDownload(url);
+            });
+        });
+    }
+
+    function startDownload(url) {
+        const cookieValue = "237063cb5b53d6175c282df626d055dd"; // abtest-identifier
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Cookie": `abtest-identifier=${cookieValue}`
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = url;
+            } else {
+                alert("Erro ao iniciar o download");
+            }
+        })
+        .catch(error => console.error("Erro ao baixar o arquivo:", error));
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
     const cookieValue = "237063cb5b53d6175c282df626d055dd"; // Valor fixo do cookie
     const listContainer = document.getElementById("list-container");
     const searchInput = document.getElementById("search");
