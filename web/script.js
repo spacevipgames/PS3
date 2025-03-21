@@ -29,6 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll("#listContainer a").forEach(link => {
             link.style.color = "white";
             link.setAttribute("target", "_blank");
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                window.location.href = link.href;
+            });
         });
     }
 
