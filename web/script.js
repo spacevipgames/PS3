@@ -34,10 +34,15 @@ document.addEventListener("DOMContentLoaded", function () {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
                 const archiveFile = this.getAttribute("href");
-                const archiveUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${archiveFile}`;
                 
-                // Abrir o link diretamente em uma nova guia para evitar bloqueios do GitHub Pages
-                window.open(archiveUrl, "_blank");
+                if (archiveFile.startsWith("http")) {
+                    // Se o link já é absoluto, apenas o abre
+                    window.location.href = archiveFile;
+                } else {
+                    // Construir URL completa corretamente
+                    const archiveUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${archiveFile}`;
+                    window.location.href = archiveUrl;
+                }
             });
         });
     }
