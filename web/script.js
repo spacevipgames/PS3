@@ -41,10 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             
             link.setAttribute("href", archiveFile);
+            link.setAttribute("target", "_blank"); // Abre em uma nova aba para evitar bloqueio
+            link.setAttribute("rel", "noopener noreferrer");
             link.setAttribute("download", ""); // Força o download automático
+            
             link.addEventListener("click", function (event) {
                 event.preventDefault();
-                window.location.href = archiveFile;
+                window.open(archiveFile, "_blank"); // Abre em nova aba para evitar restrições do navegador
             });
         });
     }
