@@ -36,6 +36,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 const finalUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${filename}`;
 
                 console.log("Redirecionando para:", finalUrl);
+
+                // Adiciona os cookies de autenticação para o download automático
+                fetch(finalUrl, {
+                    method: "GET",
+                    credentials: "include", // Envia os cookies armazenados no navegador
+                    headers: {
+                        "Cookie": document.cookie // Pega os cookies atuais do navegador
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Erro ao iniciar o download.");
+                    }
+                    window.location.href = finalUrl; // Redireciona para o download
+                })
+                .catch(error => {
+                    console.error("Erro ao baixar:", error);
+                });
+
+                // Atualiza o link para abrir diretamente no Archive.org
                 link.setAttribute("href", finalUrl);
                 link.setAttribute("target", "_blank");
 
