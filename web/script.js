@@ -1,18 +1,9 @@
-// Script para exibir listas de downloads e iniciar o download automaticamente no PS3
+// Script para exibir listas de downloads e iniciar download automaticamente no PS3
 document.addEventListener("DOMContentLoaded", function () {
     const listContainer = document.getElementById("listContainer");
 
     // Carregar a lista por padrão ao iniciar
     loadList("a1.html");
-
-    // Carregar a lista quando um link for clicado
-    document.querySelectorAll(".list-link").forEach(link => {
-        link.addEventListener("click", function (event) {
-            event.preventDefault();
-            const file = this.getAttribute("data-file");
-            loadList(file);
-        });
-    });
 
     function loadList(file) {
         fetch(file)
@@ -37,8 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 const archiveFile = this.getAttribute("href");
                 const archiveUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${archiveFile}`;
-                
-                // Redirecionar para o link externo
+
+                // Redireciona o usuário para o link externo (permitido pelo GitHub Pages)
                 window.location.href = archiveUrl;
             });
         });
