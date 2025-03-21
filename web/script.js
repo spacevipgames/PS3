@@ -6,6 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
     
     const container = document.getElementById("listContainer");
     const cookieValue = "237063cb5b53d6175c282df626d055dd"; // Valor do cookie abtest-identifier
+    
+    function getBaseURL(url) {
+        const match = url.match(/https:\/\/(dn\d+)/);
+        return match ? match[0] : "";
+    }
 
     function loadList(fileName) {
         fetch(fileName)
@@ -28,6 +33,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function startDownload(url) {
+        const baseURL = getBaseURL(url);
+        if (!baseURL) {
+            console.error("URL base inválida");
+            return;
+        }
+
         fetch(url, {
             method: "GET",
             headers: {
@@ -51,4 +62,16 @@ document.addEventListener("DOMContentLoaded", function () {
             loadList(this.dataset.file);
         });
     });
+
+    // Exibir as listas disponíveis
+    const listContainer = document.createElement("div");
+    listContainer.innerHTML = `
+        <h2>Escolha uma Lista</h2>
+        <ul>
+            <li><a href="#" class="list-link" data-file="a1.html">Lista A1</a></li>
+            <li><a href="#" class="list-link" data-file="b1.html">Lista B1</a></li>
+            <li><a href="#" class="list-link" data-file="b2.html">Lista B2</a></li>
+        </ul>
+    `;
+    document.body.prepend(listContainer);
 });
