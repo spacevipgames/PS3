@@ -4,12 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.style.backgroundColor = "black";
     document.body.style.color = "white";
     
-    const container = document.getElementById("listContainer") || document.createElement("div");
-    container.id = "listContainer";
-    document.body.appendChild(container);
+    const container = document.getElementById("listContainer");
 
-    const cookieValue = "237063cb5b53d6175c282df626d055dd"; // Valor do cookie abtest-identifier
-    
     function getBaseURL(url) {
         const match = url.match(/https:\/\/(dn\d+)/);
         return match ? match[0] : "";
@@ -51,9 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetch(url, {
             method: "GET",
-            headers: {
-                "Cookie": `abtest-identifier=${cookieValue}`
-            }
         })
         .then(response => {
             if (response.ok) {
@@ -65,23 +58,14 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Erro ao acessar o link:", error));
     }
 
-    // Criar a lista de opções antes de configurar os eventos
-    const listContainer = document.createElement("div");
-    listContainer.innerHTML = `
-        <h2 style="text-align: center;">Escolha uma Lista</h2>
-        <ul id="listSelection" style="text-align: center; list-style: none; padding: 0;">
-            <li><a href="#" class="list-link" data-file="a1.html">Lista A1</a></li>
-            <li><a href="#" class="list-link" data-file="b1.html">Lista B1</a></li>
-            <li><a href="#" class="list-link" data-file="b2.html">Lista B2</a></li>
-        </ul>
-    `;
-    document.body.prepend(listContainer);
-
-    // Event delegation para garantir que os links sempre respondam
+    // Adicionar evento para carregar a lista quando um link for clicado
     document.getElementById("listSelection").addEventListener("click", function (event) {
         if (event.target.classList.contains("list-link")) {
             event.preventDefault();
             loadList(event.target.dataset.file);
         }
     });
+
+    // Exibir automaticamente a primeira lista ao carregar
+    loadList("a1.html");
 });
