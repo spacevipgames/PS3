@@ -1,6 +1,9 @@
 // Script para exibir listas de downloads e iniciar download automaticamente no PS3
 
 document.addEventListener("DOMContentLoaded", function () {
+    document.body.style.backgroundColor = "black";
+    document.body.style.color = "white";
+    
     const container = document.getElementById("listContainer");
     const cookieValue = "237063cb5b53d6175c282df626d055dd"; // Valor do cookie abtest-identifier
 
@@ -16,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function setupDownloadLinks() {
         document.querySelectorAll("a").forEach(link => {
+            link.style.color = "white";
             link.addEventListener("click", function (event) {
                 event.preventDefault();
                 startDownload(this.href);
@@ -41,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.querySelectorAll(".list-link").forEach(link => {
+        link.style.color = "white";
         link.addEventListener("click", function (event) {
             event.preventDefault();
             loadList(this.dataset.file);
