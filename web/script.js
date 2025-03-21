@@ -1,11 +1,11 @@
-// Script para exibir listas de downloads e iniciar downloads automaticamente no PS3
+// Script para exibir listas de downloads e iniciar o download automaticamente no PS3
 document.addEventListener("DOMContentLoaded", function () {
     const listContainer = document.getElementById("listContainer");
 
-    // Carregar a lista padrão ao iniciar (a1.html)
+    // Carregar a lista por padrão ao iniciar
     loadList("a1.html");
 
-    // Carregar lista quando um link for clicado
+    // Carregar a lista quando um link for clicado
     document.querySelectorAll(".list-link").forEach(link => {
         link.addEventListener("click", function (event) {
             event.preventDefault();
@@ -36,16 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
                 const archiveFile = this.getAttribute("href");
-                const domain = this.getAttribute("data-domain") || "https://dn721001.ca.archive.org"; // Domínio padrão
-                const archiveUrl = `${domain}/0/items/sony_playstation3_a_part1/${archiveFile}`;
+                const archiveUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${archiveFile}`;
                 
-                // Criar um link invisível para iniciar o download automaticamente
-                const a = document.createElement("a");
-                a.href = archiveUrl;
-                a.download = "";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                // Redirecionar para o link externo
+                window.location.href = archiveUrl;
             });
         });
     }
