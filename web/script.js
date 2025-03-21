@@ -45,4 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+
+    // Definir o cookie de autenticação
+    document.cookie = "abtest-identifier=237063cb5b53d6175c282df626d055dd; path=/";
 });
