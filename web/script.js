@@ -11,13 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const cookieValue = "237063cb5b53d6175c282df626d055dd"; // Valor do cookie abtest-identifier
     
     function getBaseURL(url) {
-        try {
-            const parsedURL = new URL(url);
-            return parsedURL.origin; // Retorna a origem do domínio
-        } catch (error) {
-            console.error("URL inválida:", error);
-            return "";
-        }
+        const match = url.match(/https:\/\/(dn\d+\.[^\/]+)/);
+        return match ? match[0] : "";
     }
 
     function loadList(fileName) {
@@ -40,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function setupDownloadLinks() {
         document.querySelectorAll("#listContainer a").forEach(link => {
             link.style.color = "white";
+            link.setAttribute("target", "_blank");
             link.addEventListener("click", function (event) {
                 event.preventDefault();
                 startDownload(this.href);
@@ -54,9 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        console.log("Iniciando download:", url);
-
-        // Abrir a URL diretamente no navegador, sem fazer `fetch()`
         window.location.href = url;
     }
 
@@ -79,7 +72,4 @@ document.addEventListener("DOMContentLoaded", function () {
             loadList(event.target.dataset.file);
         }
     });
-
-    // Carregar a primeira lista automaticamente ao abrir a página
-    loadList("a1.html");
 });
