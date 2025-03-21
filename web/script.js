@@ -8,13 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
     container.id = "listContainer";
     document.body.appendChild(container);
 
-    const cookieValue = "237063cb5b53d6175c282df626d055dd"; // Valor do cookie abtest-identifier
-    
-    function getBaseURL(url) {
-        const match = url.match(/https:\/\/(dn\d+\.[^\/]+)/);
-        return match ? match[0] : "";
-    }
-
     function loadList(fileName) {
         fetch(fileName)
             .then(response => {
@@ -36,21 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll("#listContainer a").forEach(link => {
             link.style.color = "white";
             link.setAttribute("target", "_blank");
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
-                startDownload(this.href);
-            });
         });
-    }
-
-    function startDownload(url) {
-        const baseURL = getBaseURL(url);
-        if (!baseURL) {
-            console.error("URL base inválida");
-            return;
-        }
-
-        window.location.href = url;
     }
 
     // Criar a lista de opções antes de configurar os eventos
