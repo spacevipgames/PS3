@@ -1,3 +1,4 @@
+// Script para exibir listas de downloads e iniciar download automaticamente no PS3
 document.addEventListener("DOMContentLoaded", function () {
     const listSelection = document.getElementById("listSelection");
     const listContainer = document.getElementById("listContainer");
