@@ -3,45 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PS3 Download</title>
+    <title>Lista de Downloads PS3</title>
     <style>
         body {
             background-color: black;
             color: white;
-            font-family: Arial, sans-serif;
             text-align: center;
         }
-        #listSelection {
-            list-style: none;
-            padding: 0;
-        }
-        #listSelection li {
-            margin: 10px 0;
-        }
-        #listSelection a {
+        a {
             color: white;
             text-decoration: none;
-            font-size: 18px;
         }
-        #listSelection a:hover {
-            text-decoration: underline;
-        }
-        #listContainer {
-            margin-top: 20px;
+        ul {
+            list-style: none;
+            padding: 0;
         }
     </style>
 </head>
 <body>
-
-    <h2>Escolha uma Lista</h2>
-    <ul id="listSelection">
-        <li><a href="#" class="list-link" data-file="a1.html">Lista A1</a></li>
-        <li><a href="#" class="list-link" data-file="b1.html">Lista B1</a></li>
-        <li><a href="#" class="list-link" data-file="b2.html">Lista B2</a></li>
-    </ul>
-
-    <div id="listContainer"></div> <!-- Aqui a lista será carregada -->
-
+    <div id="listSelectionContainer">
+        <h2>Escolha uma Lista</h2>
+        <ul id="listSelection">
+            <li><a href="#" class="list-link" data-file="a1.html">Lista A1</a></li>
+            <li><a href="#" class="list-link" data-file="b1.html">Lista B1</a></li>
+            <li><a href="#" class="list-link" data-file="b2.html">Lista B2</a></li>
+        </ul>
+    </div>
+    <div id="listContainer"></div>
     <script src="script.js"></script>
 </body>
 </html>
