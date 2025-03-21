@@ -1,9 +1,11 @@
-// Script para exibir listas de downloads e iniciar download automaticamente no PS3
+// Script para exibir listas de downloads e iniciar downloads automaticamente no PS3
 document.addEventListener("DOMContentLoaded", function () {
-    const listSelection = document.getElementById("listSelection");
     const listContainer = document.getElementById("listContainer");
 
-    // Carregar a lista quando um link for clicado
+    // Carregar a lista padrão ao iniciar (a1.html)
+    loadList("a1.html");
+
+    // Carregar lista quando um link for clicado
     document.querySelectorAll(".list-link").forEach(link => {
         link.addEventListener("click", function (event) {
             event.preventDefault();
@@ -34,14 +36,20 @@ document.addEventListener("DOMContentLoaded", function () {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
                 const archiveFile = this.getAttribute("href");
-                const archiveUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${archiveFile}`;
+                const domain = this.getAttribute("data-domain") || "https://dn721001.ca.archive.org"; // Domínio padrão
+                const archiveUrl = `${domain}/0/items/sony_playstation3_a_part1/${archiveFile}`;
                 
-                // Redirecionar diretamente para o arquivo no Archive.org
-                window.location.href = archiveUrl;
+                // Criar um link invisível para iniciar o download automaticamente
+                const a = document.createElement("a");
+                a.href = archiveUrl;
+                a.download = "";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             });
         });
     }
 
-    // Definir o cookie de autenticação para o Archive.org
-    document.cookie = "abtest-identifier=237063cb5b53d6175c282df626d055dd; domain=archive.org; path=/";
+    // Definir o cookie de autenticação
+    document.cookie = "abtest-identifier=237063cb5b53d6175c282df626d055dd; path=/";
 });
