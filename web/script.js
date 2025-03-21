@@ -7,12 +7,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Carregar a lista automaticamente ao iniciar a página
     loadList("a1.html");
 
-    // Carregar a lista quando um link for clicado
+    // Adicionar evento para mudar de lista
     document.querySelectorAll(".list-link").forEach(link => {
         link.addEventListener("click", function (event) {
             event.preventDefault();
             const file = this.getAttribute("data-file");
-            loadList(file);
+            if (file) {
+                loadList(file);
+            }
         });
     });
 
@@ -36,21 +38,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function attachDownloadLinks() {
         document.querySelectorAll(".download-link").forEach(link => {
-            let archiveFile = link.getAttribute("data-file").trim();
-            
-            if (!archiveFile.startsWith("http")) {
+            let archiveFile = link.getAttribute("data-file") ? link.getAttribute("data-file").trim() : "";
+
+            if (archiveFile && !archiveFile.startsWith("http")) {
                 archiveFile = `https://archive.org/download/sony_playstation3_a_part1/${encodeURIComponent(archiveFile)}`;
             }
-            
-            link.setAttribute("href", archiveFile);
-            link.setAttribute("target", "_blank"); // Abre em uma nova aba para evitar bloqueio
-            link.setAttribute("rel", "noopener noreferrer");
-            link.setAttribute("download", ""); // Força o download automático
-            
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
-                window.location.href = archiveFile; // Redireciona diretamente para o arquivo fora do GitHub Pages
-            });
+
+            if (archiveFile) {
+                link.setAttribute("href", archiveFile);
+                link.setAttribute("target", "_blank"); // Abre em uma nova aba
+                link.setAttribute("rel", "noopener noreferrer");
+                link.setAttribute("download", ""); // Força o download automático
+            }
         });
     }
 });
