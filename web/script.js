@@ -32,11 +32,19 @@ document.addEventListener("DOMContentLoaded", function () {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
                 
+                // URL original do link
+                let originalUrl = link.href;
+                
+                // Verifica se o link já contém o domínio do Archive.org, se não, adiciona
+                if (!originalUrl.includes("archive.org")) {
+                    originalUrl = "https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/" + originalUrl;
+                }
+                
                 // Prefixo para o PS3 iniciar o download corretamente
                 const ps3DownloadPrefix = "http://localhost/popup.ps3/Iniciando%20Download!;/wait.ps3?3;/xmb.ps3/download.ps3?to=/dev_hdd0/PS3ISO&url=";
                 
                 // Redireciona o usuário para o link formatado
-                window.location.href = ps3DownloadPrefix + encodeURIComponent(link.href);
+                window.location.href = ps3DownloadPrefix + encodeURIComponent(originalUrl);
             });
         });
     }
