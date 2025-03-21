@@ -1,12 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Automático - PS3</title>
-    <script src="script.js" defer></script>
+    <title>PS3 Download</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #listSelection {
+            list-style: none;
+            padding: 0;
+        }
+        #listSelection li {
+            margin: 10px 0;
+        }
+        #listSelection a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        #listSelection a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div id="content"></div>
+
+    <h2>Escolha uma Lista</h2>
+    <ul id="listSelection">
+        <li><a href="#" class="list-link" data-file="a1.html">Lista A1</a></li>
+        <li><a href="#" class="list-link" data-file="b1.html">Lista B1</a></li>
+        <li><a href="#" class="list-link" data-file="b2.html">Lista B2</a></li>
+    </ul>
+
+    <div id="listContainer"></div> <!-- Aqui será carregada a lista -->
+
+    <script src="script.js"></script>
 </body>
 </html>
