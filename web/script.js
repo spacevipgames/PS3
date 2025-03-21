@@ -35,19 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
                 const archiveFile = this.getAttribute("href");
                 const archiveUrl = `https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/${archiveFile}`;
-
-                // Abrir em uma nova aba para evitar bloqueios
+                
+                // Abrir o link diretamente em uma nova guia para evitar bloqueios do GitHub Pages
                 window.open(archiveUrl, "_blank");
-
-                // Alternativa para forçar o download diretamente
-                setTimeout(() => {
-                    const a = document.createElement("a");
-                    a.href = archiveUrl;
-                    a.setAttribute("target", "_blank");
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                }, 100);
             });
         });
     }
