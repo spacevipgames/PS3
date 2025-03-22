@@ -17,6 +17,10 @@
             margin: 5px;
         }
     </style>
+    <script>
+        // Definindo o cookie 'abtest-identifier' com o valor fornecido
+        document.cookie = "abtest-identifier=237063cb5b53d6175c282df626d055dd; path=/;";
+    </script>
 </head>
 <body>
     <h1>Escolha uma Lista de Downloads</h1>
@@ -25,21 +29,5 @@
     <a href="b1.html">Lista B1</a>
     <a href="b2.html">Lista B2</a>
     <hr>
-
-    <script>
-        // Pega o valor do cookie de autenticação
-        function getCookie(name) {
-            let value = `; ${document.cookie}`;
-            let parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-            return null;
-        }
-
-        // Verifica se o cookie está presente
-        const authCookie = getCookie('abtest-identifier');
-        if (!authCookie) {
-            alert("Cookie não encontrado! O download pode falhar.");
-        }
-    </script>
 </body>
 </html>
