@@ -29,18 +29,14 @@
     <div id="listSelectionContainer">
         <h2>Escolha uma Lista</h2>
         <ul id="listSelection">
-            <li><a href="a1.zip" class="zip-download" data-file="a1.html">Lista A1</a></li>
-            <li><a href="b1.zip" class="zip-download" data-file="b1.html">Lista B1</a></li>
-            <li><a href="b2.zip" class="zip-download" data-file="b2.html">Lista B2</a></li>
+            <li><a href="#" class="list-link" data-file="a1.html">Lista A1</a></li>
+            <li><a href="#" class="list-link" data-file="b1.html">Lista B1</a></li>
+            <li><a href="#" class="list-link" data-file="b2.html">Lista B2</a></li>
         </ul>
     </div>
     <input type="text" id="searchBox" placeholder="Buscar...">
     <button id="searchButton">Buscar</button>
-    <div id="listContainer">
-        <!-- Link para baixar e exibir a lista A1 -->
-        <h3>Download da Lista A1</h3>
-        <a href="a1.zip" download>Baixar Lista A1</a>
-    </div>
+    <div id="listContainer"></div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById("listContainer");
@@ -48,21 +44,22 @@
             const searchButton = document.getElementById("searchButton");
             
             function loadList(fileName) {
-                if (navigator.userAgent.includes("PS3")) {
-                    // Redireciona diretamente no PS3
-                    window.location.href = fileName;
-                } else {
-                    fetch(fileName)
+                localStorage.setItem("selectedList", fileName); // Salva a lista no armazenamento local
+                window.location.reload(); // Recarrega a página para exibir a lista escolhida
+            }
+
+            function displaySavedList() {
+                const savedList = localStorage.getItem("selectedList");
+                if (savedList) {
+                    fetch(savedList)
                         .then(response => {
                             if (!response.ok) {
-                                throw new Error("Arquivo não encontrado: " + fileName);
+                                throw new Error("Arquivo não encontrado: " + savedList);
                             }
                             return response.text();
                         })
                         .then(html => {
-                            console.log("Conteúdo carregado:", html); // DEBUG
                             container.innerHTML = html;
-                            setupDownloadLinks();
                         })
                         .catch(error => {
                             container.innerHTML = `<p style="color: red;">Erro ao carregar a lista: ${error.message}</p>`;
@@ -70,31 +67,28 @@
                 }
             }
 
-            function setupDownloadLinks() {
-                document.querySelectorAll("#listContainer a").forEach(link => {
-                    link.style.color = "white";
-                    link.setAttribute("target", "_blank");
-                });
-            }
-
-            function filterList() {
+            searchBox.addEventListener("input", function () {
                 const query = searchBox.value.toLowerCase().trim();
                 document.querySelectorAll("#listContainer a").forEach(item => {
                     const text = item.textContent.toLowerCase();
                     item.style.display = text.includes(query) ? "" : "none";
                 });
-            }
+            });
+            searchButton.addEventListener("click", function () {
+                searchBox.dispatchEvent(new Event("input"));
+            });
 
-            searchBox.addEventListener("input", filterList);
-            searchButton.addEventListener("click", filterList);
-
-            document.querySelectorAll(".zip-download").forEach(link => {
+            document.querySelectorAll(".list-link").forEach(link => {
                 link.addEventListener("click", function (event) {
                     event.preventDefault();
-                    const file = this.getAttribute("href");
-                    window.location.href = file; // Força o download do ZIP
+                    const file = this.getAttribute("data-file");
+                    if (file) {
+                        loadList(file);
+                    }
                 });
             });
+            
+            displaySavedList(); // Exibe a lista salva ao carregar a página
         });
     </script>
 </body>
