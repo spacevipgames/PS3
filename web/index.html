@@ -68,12 +68,25 @@
                     link.addEventListener("click", function (event) {
                         event.preventDefault();
                         let archiveFile = link.getAttribute("href");
-                        let folder = link.closest("ul").dataset.folder || "";
                         
-                        if (archiveFile && !archiveFile.startsWith("http")) {
-                            archiveFile = `https://dn721001.ca.archive.org/0/items/${folder}/${encodeURIComponent(archiveFile)}`;
+                        if (archiveFile && archiveFile.startsWith("http")) {
+                            window.location.href = archiveFile;
+                        } else {
+                            fetch(link.closest("ul").dataset.source)
+                                .then(response => response.text())
+                                .then(text => {
+                                    const lines = text.split("\n");
+                                    const matchingLine = lines.find(line => line.includes(archiveFile));
+                                    if (matchingLine) {
+                                        window.location.href = matchingLine.trim();
+                                    } else {
+                                        alert("Link não encontrado na lista vinculada.");
+                                    }
+                                })
+                                .catch(error => {
+                                    alert("Erro ao buscar a lista de links: " + error.message);
+                                });
                         }
-                        window.location.href = archiveFile;
                     });
                 });
             }
