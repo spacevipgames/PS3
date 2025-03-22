@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lista de Downloads</title>
+    <title>Index of sony_playstation3_a_part1/</title>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Função para pegar o cookie de autenticação
             function getCookie(name) {
                 let value = `; ${document.cookie}`;
                 let parts = value.split(`; ${name}=`);
@@ -12,38 +11,39 @@
                 return null;
             }
 
-            // Pega o cookie de autenticação
-            const authCookie = getCookie('abtest-identifier'); // Altere para o nome correto do cookie
-
+            const authCookie = getCookie('abtest-identifier');
             if (!authCookie) {
-                alert("Cookie de autenticação não encontrado!");
-                return;
+                alert("Cookie não encontrado! O download pode falhar.");
             }
 
-            // Manipula os links de download
             document.querySelectorAll("a.download-link").forEach(link => {
                 link.addEventListener("click", function (event) {
                     event.preventDefault();
-                    const targetUrl = link.getAttribute("href");
+                    let targetUrl = link.getAttribute("href");
 
-                    // Construir a URL para o PS3 com o cookie de autenticação
-                    const downloadUrl = `http://localhost/popup.ps3/Iniciando%20Download!;/wait.ps3?3;/xmb.ps3/download.ps3?to=/dev_hdd0/PS3ISO&url=${encodeURIComponent(targetUrl)}&cookie=${authCookie}`;
+                    // Converte a URL para o formato correto do PS3
+                    let ps3DownloadURL = `http://localhost/popup.ps3/Iniciando%20Download!;/wait.ps3?3;/xmb.ps3/download.ps3?to=/dev_hdd0/PS3ISO&url=${encodeURIComponent(targetUrl)}&cookie=${encodeURIComponent(authCookie)}`;
 
-                    // Redireciona para a URL do PS3
-                    window.location.href = downloadUrl;
+                    // Redireciona para a URL formatada para o PS3
+                    window.location.href = ps3DownloadURL;
                 });
             });
         });
     </script>
 </head>
 <body>
-    <h1>Lista de Downloads</h1>
-    <hr>
-    <ul>
-        <li><a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/ABC%20Wipeout%202%20%28USA%29.iso">ABC Wipeout 2 (USA).iso</a></li>
-        <li><a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.iso">AC-DC Live - Rock Band (Europe).iso</a></li>
-        <li><a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20Track%20Pack%20%28USA%29.iso">AC-DC Live - Rock Band Track Pack (USA).iso</a></li>
-        <!-- Adicione mais links conforme necessário -->
-    </ul>
+<h1>Index of sony_playstation3_a_part1/</h1><hr>
+<pre><a href="../">../</a>
+<a href="a1.html">Lista A1</a>
+<a href="b1.html">Lista B1</a>
+<a href="b2.html">Lista B2</a>
+
+<!-- Adicionando a classe "download-link" para ativar o script -->
+<a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/ABC%20Wipeout%202%20(USA%29.iso">ABC Wipeout 2 (USA).iso</a> 08-Feb-2023 22:19 1511063552
+<a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.iso">AC-DC Live - Rock Band (Europe).iso</a> 08-Feb-2023 22:35 2954493952
+<a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20Track%20Pack%20%28USA%29.iso">AC-DC Live - Rock Band Track Pack (USA).iso</a> 08-Feb-2023 22:38 3452108800
+<a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AFL%20Live%20%28Australia%29.iso">AFL Live (Australia).iso</a> 09-Feb-2023 00:20 1834942464
+<a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AFL%20Live%202%20%28Australia%29.iso">AFL Live 2 (Australia).iso</a> 09-Feb-2023 00:23 3609853952
+</pre><hr>
 </body>
 </html>
