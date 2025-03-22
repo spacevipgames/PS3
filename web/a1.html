@@ -1,36 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Index of sony_playstation3_a_part1/</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista A1 - PS3</title>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const cookies = document.cookie; // Pega os cookies do navegador
+
             document.querySelectorAll("a").forEach(link => {
                 link.addEventListener("click", function (event) {
                     event.preventDefault();
-                    const targetUrl = link.getAttribute("href");
+                    const fileUrl = link.getAttribute("href");
 
-                    if (targetUrl.endsWith(".html")) {
-                        window.location.href = targetUrl;
-                        setTimeout(() => { location.reload(); }, 500); // Força recarregamento no PS3
-                    } else {
-                        window.location.href = targetUrl;
-                    }
+                    // Realiza a requisição do download com o cookie
+                    fetch(fileUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Cookie': cookies
+                        }
+                    })
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const link = document.createElement("a");
+                        link.href = URL.createObjectURL(blob);
+                        link.download = fileUrl.split("/").pop(); // Nome do arquivo
+                        link.click();
+                    })
+                    .catch(error => {
+                        console.error('Erro ao fazer download:', error);
+                    });
                 });
             });
         });
     </script>
 </head>
 <body>
-<h1>Index of sony_playstation3_a_part1/</h1><hr>
-<pre><a href="../">../</a>
-<a href="a1.html">Lista A1</a>
-<a href="b1.html">Lista B1</a>
-<a href="b2.html">Lista B2</a>
-<a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/ABC%20Wipeout%202%20%28USA%29.iso">ABC Wipeout 2 (USA).iso</a> 08-Feb-2023 22:19 1511063552
-<a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.iso">AC-DC Live - Rock Band (Europe).iso</a> 08-Feb-2023 22:35 2954493952
-<a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20Track%20Pack%20%28USA%29.iso">AC-DC Live - Rock Band Track Pack (USA).iso</a> 08-Feb-2023 22:38 3452108800
-<a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AFL%20Live%20%28Australia%29.iso">AFL Live (Australia).iso</a> 09-Feb-2023 00:20 1834942464
-<a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AFL%20Live%202%20%28Australia%29.iso">AFL Live 2 (Australia).iso</a> 09-Feb-2023 00:23 3609853952
-</pre><hr>
+    <h1>Lista A1 de Downloads</h1>
+    <hr>
+    <ul>
+        <li><a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/ABC%20Wipeout%202%20%28USA%29.iso">ABC Wipeout 2 (USA).iso</a></li>
+        <li><a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.iso">AC-DC Live - Rock Band (Europe).iso</a></li>
+        <!-- Adicione mais links conforme necessário -->
+    </ul>
+    <hr>
 </body>
 </html>
