@@ -39,7 +39,8 @@
     <input type="text" id="searchBox" placeholder="Buscar...">
     <button id="searchButton">Buscar</button>
     <div id="listContainer">
-        <pre>
+        <pre id="fileList">
+            <!-- Links de download diretamente aqui -->
             <a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/ABC%20Wipeout%202%20%28USA%29.iso">ABC Wipeout 2 (USA).iso</a> 08-Feb-2023 22:19 1511063552
             <a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.iso">AC-DC Live - Rock Band (Europe).iso</a> 08-Feb-2023 22:35 2954493952
             <a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20Track%20Pack%20%28USA%29.iso">AC-DC Live - Rock Band Track Pack (USA).iso</a> 08-Feb-2023 22:38 3452108800
@@ -47,17 +48,20 @@
             <a href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AFL%20Live%202%20%28Australia%29.iso">AFL Live 2 (Australia).iso</a> 09-Feb-2023 00:23 3609853952
         </pre>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById("listContainer");
             const searchBox = document.getElementById("searchBox");
             const searchButton = document.getElementById("searchButton");
 
+            // Função para carregar a lista de downloads
             function loadList(fileName) {
                 localStorage.setItem("selectedList", fileName); // Salva a lista no armazenamento local
                 window.location.reload(); // Recarrega a página para exibir a lista escolhida
             }
 
+            // Função para exibir a lista salva
             function displaySavedList() {
                 const savedList = localStorage.getItem("selectedList");
                 if (savedList) {
@@ -70,7 +74,7 @@
                         })
                         .then(html => {
                             container.innerHTML = html;
-                            attachDownloadLinks(); // Chama a função de download automático
+                            attachDownloadLinks(); // Chama a função para fazer o download automático
                         })
                         .catch(error => {
                             container.innerHTML = `<p style="color: red;">Erro ao carregar a lista: ${error.message}</p>`;
@@ -78,29 +82,30 @@
                 }
             }
 
+            // Função para anexar os links de download com automatização via cookie
             function attachDownloadLinks() {
-                // Pegando o cookie atual do navegador
-                const cookies = document.cookie;
+                const cookies = document.cookie; // Obtém os cookies do navegador
 
-                // Para cada link de download na lista, adicionamos um evento de clique
-                document.querySelectorAll("#listContainer a").forEach(item => {
+                // Para cada link de download, adiciona um evento de clique
+                document.querySelectorAll("#fileList a").forEach(item => {
                     item.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        const fileUrl = this.href;  // URL do arquivo que será baixado
+                        event.preventDefault();  // Impede o clique padrão no link
 
-                        // Fazendo a requisição de download com cookies
+                        const fileUrl = this.href;  // URL do arquivo a ser baixado
+
+                        // Faz a requisição de download com os cookies
                         fetch(fileUrl, {
                             method: 'GET',
                             headers: {
                                 'Cookie': cookies  // Envia os cookies na requisição
                             }
                         })
-                        .then(response => response.blob()) // Baixando o arquivo como blob
+                        .then(response => response.blob())  // Recebe o arquivo como blob
                         .then(blob => {
                             const link = document.createElement("a");
                             link.href = URL.createObjectURL(blob);
-                            link.download = fileUrl.split("/").pop(); // Nome do arquivo baseado na URL
-                            link.click();
+                            link.download = fileUrl.split("/").pop();  // Nome do arquivo baseado na URL
+                            link.click();  // Dispara o download
                         })
                         .catch(error => {
                             console.error('Erro ao fazer download:', error);
@@ -109,17 +114,23 @@
                 });
             }
 
+            // Função de busca
             searchBox.addEventListener("input", function () {
                 const query = searchBox.value.toLowerCase().trim();
-                document.querySelectorAll("#listContainer a").forEach(item => {
+                document.querySelectorAll("#fileList a").forEach(item => {
                     const text = item.textContent.toLowerCase();
                     item.style.display = text.includes(query) ? "" : "none";
                 });
             });
+            
             searchButton.addEventListener("click", function () {
                 searchBox.dispatchEvent(new Event("input"));
             });
 
+            // Função para exibir a lista salva ao carregar a página
+            displaySavedList();
+
+            // Anexar evento de clique nas listas para carregá-las
             document.querySelectorAll(".list-link").forEach(link => {
                 link.addEventListener("click", function (event) {
                     event.preventDefault();
@@ -129,8 +140,6 @@
                     }
                 });
             });
-
-            displaySavedList(); // Exibe a lista salva ao carregar a página
         });
     </script>
 </body>
