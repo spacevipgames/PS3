@@ -21,8 +21,8 @@
                     event.preventDefault();
                     let targetUrl = link.getAttribute("href");
 
-                    // Converte a URL para o formato correto do PS3
-                    let ps3DownloadURL = `http://localhost/popup.ps3/Iniciando%20Download!;/wait.ps3?3;/xmb.ps3/download.ps3?to=/dev_hdd0/PS3ISO&url=${encodeURIComponent(targetUrl)}&cookie=${encodeURIComponent(authCookie)}`;
+                    // Corrigir codificação: aplicamos apenas encodeURIComponent uma vez
+                    let ps3DownloadURL = `http://localhost/popup.ps3/Iniciando%20Download!;/wait.ps3?3;/xmb.ps3/download.ps3?to=/dev_hdd0/PS3ISO&url=${targetUrl}&cookie=${encodeURIComponent(authCookie)}`;
 
                     // Redireciona para a URL formatada para o PS3
                     window.location.href = ps3DownloadURL;
