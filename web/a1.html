@@ -1,7 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Index of sony_playstation3_a_part1/</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index de Downloads - PS3</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 5px;
+        }
+    </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             function getCookie(name) {
@@ -22,24 +37,24 @@
                     event.preventDefault();
                     let targetUrl = link.getAttribute("href");
 
-                    // Criamos o link correto para o PHP, passando o cookie e a URL do download
-                    let phpDownloadURL = `https://spcgames.fwh.is/download.php?url=${encodeURIComponent(targetUrl)}&cookie=${authCookie}`;
+                    // Criamos o link correto para o PS3, garantindo que a URL esteja correta
+                    let ps3DownloadURL = `http://localhost/popup.ps3/Iniciando%20Download!;/wait.ps3?3;/xmb.ps3/download.ps3?to=/dev_hdd0/PS3ISO&url=${targetUrl}&cookie=${authCookie}`;
 
-                    // Redireciona para o PHP que processará o download
-                    window.location.href = phpDownloadURL;
+                    // Redirecionamos para o link correto no PS3
+                    window.location.href = ps3DownloadURL;
                 });
             });
         });
     </script>
 </head>
 <body>
-<h1>Index of sony_playstation3_a_part1/</h1><hr>
+<h1>Index de Downloads - PS3</h1><hr>
 <pre><a href="../">../</a>
 <a href="a1.html">Lista A1</a>
 <a href="b1.html">Lista B1</a>
 <a href="b2.html">Lista B2</a>
 
-<!-- Links de download -->
+<!-- Links de download com a classe para aplicar o evento -->
 <a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/ABC%20Wipeout%202%20(USA).iso">ABC Wipeout 2 (USA).iso</a> 08-Feb-2023 22:19 1511063552
 <a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20(Europe).iso">AC-DC Live - Rock Band (Europe).iso</a> 08-Feb-2023 22:35 2954493952
 <a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20Track%20Pack%20(USA).iso">AC-DC Live - Rock Band Track Pack (USA).iso</a> 08-Feb-2023 22:38 3452108800
