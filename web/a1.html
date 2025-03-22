@@ -22,11 +22,11 @@
                     event.preventDefault();
                     let targetUrl = link.getAttribute("href");
 
-                    // Criamos o link correto para o PS3, garantindo que a URL esteja correta
-                    let ps3DownloadURL = `http://localhost/popup.ps3/Iniciando%20Download!;/wait.ps3?3;/xmb.ps3/download.ps3?to=/dev_hdd0/PS3ISO&url=${targetUrl}&cookie=${authCookie}`;
+                    // Criamos o link correto para o PHP, passando o cookie e a URL do download
+                    let phpDownloadURL = `https://spcgames.fwh.is/download.php?url=${encodeURIComponent(targetUrl)}&cookie=${authCookie}`;
 
-                    // Redirecionamos para o link correto no PS3
-                    window.location.href = ps3DownloadURL;
+                    // Redireciona para o PHP que processará o download
+                    window.location.href = phpDownloadURL;
                 });
             });
         });
@@ -39,7 +39,7 @@
 <a href="b1.html">Lista B1</a>
 <a href="b2.html">Lista B2</a>
 
-<!-- Corrigimos os links para seguir a estrutura usada no PS3 -->
+<!-- Links de download -->
 <a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/ABC%20Wipeout%202%20(USA).iso">ABC Wipeout 2 (USA).iso</a> 08-Feb-2023 22:19 1511063552
 <a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20(Europe).iso">AC-DC Live - Rock Band (Europe).iso</a> 08-Feb-2023 22:35 2954493952
 <a class="download-link" href="https://dn721001.ca.archive.org/0/items/sony_playstation3_a_part1/AC-DC%20Live%20-%20Rock%20Band%20Track%20Pack%20(USA).iso">AC-DC Live - Rock Band Track Pack (USA).iso</a> 08-Feb-2023 22:38 3452108800
