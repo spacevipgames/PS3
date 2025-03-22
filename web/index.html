@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Downloads PS3</title>
+    <title>Index de Downloads - PS3</title>
     <style>
         body {
             background-color: black;
@@ -13,84 +13,17 @@
         a {
             color: white;
             text-decoration: none;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        #searchBox {
-            margin: 10px;
-            padding: 5px;
-            width: 80%;
+            display: block;
+            margin: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Index de Downloads PS3</h1>
-    <div id="listSelectionContainer">
-        <h2>Escolha uma Lista</h2>
-        <ul id="listSelection">
-            <li><a href="#" class="list-link" data-file="a1.html">Lista A1</a></li>
-            <li><a href="#" class="list-link" data-file="b1.html">Lista B1</a></li>
-            <li><a href="#" class="list-link" data-file="b2.html">Lista B2</a></li>
-        </ul>
-    </div>
-    <input type="text" id="searchBox" placeholder="Buscar...">
-    <button id="searchButton">Buscar</button>
-    <div id="listContainer">
-        <ul id="downloadList">
-            <!-- Links de download serão carregados aqui -->
-        </ul>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const container = document.getElementById("downloadList");
-            const searchBox = document.getElementById("searchBox");
-            const searchButton = document.getElementById("searchButton");
-
-            function loadList(fileName) {
-                fetch(fileName)
-                    .then(response => response.text())
-                    .then(data => {
-                        container.innerHTML = data;
-                        attachDownloadLinks(); // Chama a função de download automático
-                    });
-            }
-
-            function attachDownloadLinks() {
-                document.querySelectorAll("#downloadList a").forEach(item => {
-                    item.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        const fileUrl = this.href;
-                        // Aqui chamamos o PHP passando a URL do arquivo para autenticação
-                        fetch("download.php?file=" + encodeURIComponent(fileUrl))
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    window.location.href = data.downloadLink;
-                                } else {
-                                    alert('Erro ao processar o download.');
-                                }
-                            });
-                    });
-                });
-            }
-
-            searchBox.addEventListener("input", function () {
-                const query = searchBox.value.toLowerCase().trim();
-                document.querySelectorAll("#downloadList a").forEach(item => {
-                    const text = item.textContent.toLowerCase();
-                    item.style.display = text.includes(query) ? "" : "none";
-                });
-            });
-
-            searchButton.addEventListener("click", function () {
-                searchBox.dispatchEvent(new Event("input"));
-            });
-
-            loadList('a1.html'); // Exemplo, carregando a lista A1 ao iniciar
-        });
-    </script>
+    <h1>Escolha uma Lista de Downloads</h1>
+    <hr>
+    <a href="a1.html">Lista A1</a>
+    <a href="b1.html">Lista B1</a>
+    <a href="b2.html">Lista B2</a>
+    <hr>
 </body>
 </html>
