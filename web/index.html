@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index de Downloads - PS3</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Escolha uma Lista de Downloads</h1>
+    <hr>
+    <a href="a1.html">Lista A1</a>
+    <a href="b1.html">Lista B1</a>
+    <a href="b2.html">Lista B2</a>
+    <hr>
+
+    <script>
+        // Pega o valor do cookie de autenticação
+        function getCookie(name) {
+            let value = `; ${document.cookie}`;
+            let parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        // Verifica se o cookie está presente
+        const authCookie = getCookie('abtest-identifier');
+        if (!authCookie) {
+            alert("Cookie não encontrado! O download pode falhar.");
+        }
+    </script>
+</body>
+</html>
