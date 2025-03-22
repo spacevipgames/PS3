@@ -34,7 +34,8 @@ $response = file_get_contents($fileUrl, false, $context);
 
 if ($response !== false) {
     // Redireciona o PS3 para iniciar o download com autenticação
-    header("Location: http://localhost/popup.ps3/Iniciando%20Download!;/wait.ps3?3;/xmb.ps3/download.ps3?to=/dev_hdd0/PS3ISO&url=" . urlencode($fileUrl) . "&cookie=" . urlencode($cookieValue));
+    // Alterado o URL para o domínio correto onde está o PHP funcionando
+    header("Location: https://spcgames.fwh.is/download.php?file=" . urlencode($file) . "&cookie=" . urlencode($cookieValue));
     exit();
 } else {
     die("Erro ao acessar o arquivo.");
