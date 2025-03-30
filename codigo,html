@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game List</title>
+    <style>
+        /* Definindo o estilo básico */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e; /* Fundo preto */
+            color: white; /* Texto branco */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo para as guias principais */
+        #menu {
+            display: flex;
+            justify-content: left;
+            background-color: #333;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        .menu-item {
+            margin-right: 20px;
+            cursor: pointer;
+            padding: 5px 15px;
+            background-color: #444;
+            border-radius: 5px;
+        }
+
+        .menu-item:hover {
+            background-color: #555;
+        }
+
+        /* Estilo para a área principal onde serão exibidos os submenus */
+        .submenu {
+            display: none;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        /* Estilo para as letras das subcategorias */
+        .submenu a {
+            color: white;
+            display: block;
+            margin: 10px 0;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .submenu a:hover {
+            background-color: #555;
+            padding-left: 10px;
+        }
+
+        .submenu .header {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu de navegação principal -->
+    <div id="menu">
+        <div class="menu-item" onclick="showSubMenu('retroRoms')">RETRO ROMS</div>
+        <div class="menu-item" onclick="showSubMenu('emuladores')">EMULADORES</div>
+        <div class="menu-item" onclick="showSubMenu('playstation')">PLAYSTATION</div>
+    </div>
+
+    <!-- Submenu para Retro Roms -->
+    <div id="retroRoms" class="submenu">
+        <div class="header">Retro Roms</div>
+        <a href="#" onclick="showGames('fliperama')">Fliperama</a>
+        <a href="#" onclick="showGames('neogeo')">NeoGeo</a>
+        <a href="#" onclick="showGames('gameboy')">GameBoy</a>
+        <a href="#" onclick="showGames('snes')">SNES</a>
+        <a href="#" onclick="showGames('sega')">Sega Genesis</a>
+        <a href="#" onclick="showGames('atari')">Atari</a>
+        <a href="#" onclick="showGames('fba')">FBA</a>
+        <a href="#" onclick="showGames('famicom')">Famicom</a>
+        <a href="#" onclick="showGames('n64')">N64</a>
+    </div>
+
+    <!-- Submenu para Emuladores -->
+    <div id="emuladores" class="submenu">
+        <div class="header">Emuladores</div>
+        <a href="#" onclick="showGames('gameboyEmu')">GameBoy</a>
+        <a href="#" onclick="showGames('snesEmu')">SNES</a>
+        <a href="#" onclick="showGames('segaEmu')">Sega</a>
+        <a href="#" onclick="showGames('atariEmu')">Atari</a>
+        <a href="#" onclick="showGames('gamegear')">GameGear</a>
+        <a href="#" onclick="showGames('masterSystem')">Master System</a>
+        <a href="#" onclick="showGames('mame')">MAME</a>
+        <a href="#" onclick="showGames('fbaEmu')">FBA</a>
+    </div>
+
+    <!-- Submenu para PlayStation -->
+    <div id="playstation" class="submenu">
+        <div class="header">PlayStation</div>
+        <a href="#" onclick="showGames('ps3')">PS3</a>
+        <a href="#" onclick="showGames('ps2')">PS2</a>
+        <a href="#" onclick="showGames('ps1')">PS1</a>
+        <a href="#" onclick="showGames('psp')">PSP</a>
+    </div>
+
+    <!-- Área de exibição dos jogos -->
+    <div id="gamesList" style="padding: 20px; color: white;"></div>
+
+    <script>
+        // Função para exibir o submenu quando uma guia for clicada
+        function showSubMenu(menuId) {
+            const menus = document.querySelectorAll('.submenu');
+            menus.forEach(menu => {
+                menu.style.display = 'none'; // Esconde todos os submenus
+            });
+            document.getElementById(menuId).style.display = 'block'; // Mostra o submenu clicado
+        }
+
+        // Função para exibir os jogos de acordo com a categoria selecionada
+        function showGames(category) {
+            const gamesData = {
+                // Retro Roms
+                fliperama: [
+                    'Street Fighter II - http://link.com/1',
+                    'Pac-Man - http://link.com/2',
+                    'Donkey Kong - http://link.com/3'
+                ],
+                neogeo: [
+                    'Samurai Shodown - http://link.com/4',
+                    'King of Fighters - http://link.com/5'
+                ],
+                // Emuladores
+                gameboyEmu: [
+                    'Pokémon Red - http://link.com/6',
+                    'The Legend of Zelda - http://link.com/7'
+                ],
+                snesEmu: [
+                    'Super Mario World - http://link.com/8'
+                ],
+                // PlayStation
+                ps3: [
+                    'God of War - http://link.com/9',
+                    'Gran Turismo 5 - http://link.com/10'
+                ],
+                ps2: [
+                    'Final Fantasy X - http://link.com/11'
+                ]
+            };
+
+            const gamesList = document.getElementById('gamesList');
+            gamesList.innerHTML = ''; // Limpa a lista de jogos
+
+            const selectedGames = gamesData[category];
+            if (selectedGames) {
+                selectedGames.forEach(game => {
+                    const gameElement = document.createElement('div');
+                    gameElement.innerHTML = game;
+                    gamesList.appendChild(gameElement);
+                });
+            }
+        }
+
+        // Inicia exibindo o submenu de Retro Roms ao carregar a página
+        showSubMenu('retroRoms');
+    </script>
+</body>
+</html>
